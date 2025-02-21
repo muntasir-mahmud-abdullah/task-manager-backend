@@ -25,6 +25,24 @@ async function connectDB() {
 connectDB();
 
 const tasksCollection = () => db.collection("tasks");
+const usersCollection = db.collection("users");
+
+// 📌 1️⃣ Store User Data on Login
+app.post("/users", async (req, res) => {
+  const { uid, email, displayName } = req.body;
+  try {
+    
+    const existingUser = await usersCollection.findOne({ uid });
+
+    if (!existingUser) {
+      await usersCollection.insertOne({ uid, email, displayName });
+    }
+
+    res.status(200).json({ message: "User stored successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // CRUD Routes
 
