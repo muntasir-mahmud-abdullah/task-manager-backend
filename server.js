@@ -1,9 +1,9 @@
+require("dotenv").config();
 const express = require("express");
 const { MongoClient, ObjectId } = require("mongodb");
 const cors = require("cors");
 const http = require("http"); // Required for Socket.io
 const { Server } = require("socket.io");
-require("dotenv").config();
 
 const app = express();
 app.use(express.json());
@@ -35,7 +35,7 @@ let db;
 
 async function connectDB() {
   try {
-    await client.connect();
+    // await client.connect();
     db = client.db("task_manager");
     console.log("✅ Connected to MongoDB (Raw)");
   } catch (error) {
